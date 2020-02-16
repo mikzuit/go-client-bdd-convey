@@ -50,3 +50,19 @@ func TestCreateAccount(t *testing.T) {
 		})
 	})
 } 
+
+func TestFetchAccount(t *testing.T){
+	Convey("Given a GET request to /v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc", t, func() {
+		req := httptest.NewRequest("GET", "/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc", nil)
+		res := httptest.NewRecorder()
+		Convey("When the request is handler by router", func() {
+			config := config.GetConfig()
+			app := &app.App{}
+			app.Initialize(config)
+			app.Router.ServeHTTP(res,req)
+			Convey("Then the response should be 200", func() {
+				So(res.Code, ShouldEqual, 200)
+			})
+		})
+	})
+}
