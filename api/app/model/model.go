@@ -30,6 +30,7 @@ type Attributes struct{
 }
 
 type Account struct{
+	gorm.Model
 	Type string `json:"type"`
 	Aid string	`gorm:"primary_key" json:"id,omitempty"`
 	OrganisationId string `json:"organisation_id"`
