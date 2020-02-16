@@ -14,8 +14,8 @@ func respondJSON(w http.ResponseWriter, status int, payload interface{}){
 	}
 
 	// Set specific headers
-	w.Header().Set("Content-Type", "application/vdn.api+json")
-	w.WriteHeader(status)
+	w.Header().Set("Content-Type", "application/vnd.api+json")
+	w.Header().Set("Accept", "application/vnd.api+json")
 
 	// Set response
 	w.Write([]byte(response))
