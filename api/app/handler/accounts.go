@@ -27,7 +27,7 @@ func CreateAccount(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return 
 	}
-	respondJSON(w, http.StatusCreated, record)
+	respondJSON(w, http.StatusCreated, record.Data)
 }
 
 func FetchAccount(db *gorm.DB, w http.ResponseWriter, r *http.Request){
@@ -60,6 +60,19 @@ func DeleteAccount(db *gorm.DB, w http.ResponseWriter, r *http.Request){
 		return
 	}
 	respondJSON(w, http.StatusNoContent, nil)
+}
+
+// Handler for LIST account with pagination
+func GetPagination(db *gorm.DB, w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+
+	id := vars["page_number"]
+	limit := vars["page_size"]
+
+	accounts := []model.Account{}
+
+	db.Where("aid > ?", id).Order("ID ASC").Limit(limit).Find(&accounts)
+	respondJSON(w, http.StatusOK, accounts)
 }
 
 // util function to retrieve models or 404
