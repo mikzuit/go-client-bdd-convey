@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  accountclient:
+    build: "./docker/debug"
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - ".:/go/src/github.com/mikzuit"
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "2345:2345"
+    environment:
+      # GO_WORK_DIR: "${GO_PROJECT_DIR}/mikzuit"
+      PSQL_USER: root
+      PSQL_PASSWORD: password
+      PSQL_HOST: f3postgresql
+      PSQL_PORT: 5432
+      STACK_NAME: f3-interview-accountapi
+    #command: ["sh", "-c", "sleep 2073600"]
+    # command: bash -c "cd /go/src/github.com/mikzuit/tests && /go/bin/goconvey -host=0.0.0.0"
+    # entrypoint: dlv debug github.com/mikzuit --headless --listen=0.0.0.0:2345 --log=true -- server
+    command: bash -c "cd /go/src/github.com/mikzuit && go run main.go"
+  f3postgresql:
+    image: postgres:latest
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    volumes:
+      - ./scripts/db:/docker-entrypoint-initdb.d/
