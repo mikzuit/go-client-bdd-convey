@@ -21,7 +21,7 @@ func GetConfig() *Config {
 			Password: "password",
 			Name: "interview_accountapi",
 			Charset: "utf8",
-			Host: "192.168.160.3",
+			Host: "postgresql",
 		},
 	}
 }
