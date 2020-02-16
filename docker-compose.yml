@@ -19,8 +19,8 @@ services:
       PSQL_PORT: 5432
       STACK_NAME: f3-interview-accountapi
     #command: ["sh", "-c", "sleep 2073600"]
-    command: bash -c "cd /go/src/github.com/mikzuit/tests && /go/bin/goconvey -host=0.0.0.0"
-    # entrypoint: dlv debug github.com/mikzuit --headless --listen=0.0.0.0:2345 --log=true -- server
+    #command: bash -c "cd /go/src/github.com/mikzuit/tests && /go/bin/goconvey -host=0.0.0.0"
+    entrypoint: dlv debug github.com/mikzuit --headless --listen=0.0.0.0:2345 --log=true -- server
     #command: bash -c "cd /go/src/github.com/mikzuit && go run main.go"
   postgresql:
     image: postgres:latest
