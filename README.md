@@ -1,6 +1,8 @@
 
 # Installation
-Run "docker-compose up" , Application should start running test with convey on:
+Run "docker-compose up" in default branch( dev), Application should start running test with convey on:
+
+To run app in debug mode, switch to "debug" branch and "docker-compose up"
 
 http://localhost:8080
 
