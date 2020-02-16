@@ -28,3 +28,7 @@ func CreateAccount(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	}
 	respondJSON(w, http.StatusCreated, record)
 }
+
+func FetchAccount(db *gorm.DB, w http.ResponseWriter, r *http.Request){
+
+}
