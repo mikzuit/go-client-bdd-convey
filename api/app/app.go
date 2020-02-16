@@ -45,6 +45,7 @@ func(a *App) Initialize(config *config.Config) {
 func (a *App) setRouters(){
 	a.Get("/v1/organisation/accounts/{accountid}", a.FetchAccount)
 	a.Post("/v1/organisation/accounts", a.CreateAccount)
+	a.Delete("/v1/organisation/accounts/{accountid}", a.DeleteAccount)
 }
 
 // Wrap the router for GET method
@@ -70,6 +71,11 @@ func (a *App) CreateAccount(w http.ResponseWriter, r *http.Request) {
 // indicated handler for fetch account
 func (a *App) FetchAccount(w http.ResponseWriter, r *http.Request) {
 	handler.FetchAccount(a.DB, w, r)
+}
+
+// indicated handler for delete account
+func (a *App) DeleteAccount(w http.ResponseWriter, r *http.Request) {
+	handler.DeleteAccount(a.DB, w, r)
 }
 
 func (a *App) Run(host string) {
