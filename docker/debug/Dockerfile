@@ -25,4 +25,4 @@ RUN go get github.com/jinzhu/gorm/dialects/postgres
 WORKDIR $GOPATH
 ENTRYPOINT ["/entrypoint.sh"]
 
-#CMD ["go", "run", "main.go"]
+CMD ["go", "run", "main.go"]
