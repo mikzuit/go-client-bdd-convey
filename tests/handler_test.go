@@ -66,3 +66,19 @@ func TestFetchAccount(t *testing.T){
 		})
 	})
 }
+
+func TestDeleteAccount(t *testing.T) {
+	Convey("Given a DELETE request to /v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc?version=0", t, func() {
+		req := httptest.NewRequest("DELETE", "/v1/organisation/accounts/ad27e265-9605-4b4b-a0e5-3003ea9cc4dc?version=0", nil)
+		res := httptest.NewRecorder()
+		Convey("When the request is handler by router", func() {
+			config := config.GetConfig()
+			app := &app.App{}
+			app.Initialize(config)
+			app.Router.ServeHTTP(res,req)
+			Convey("Then the response should be 204", func() {
+				So(res.Code, ShouldEqual, 204)
+			})
+		})
+	})
+}
