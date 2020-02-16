@@ -8,6 +8,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/mikzuit/api/config"
 	"github.com/mikzuit/api/app/model"
+	"github.com/mikzuit/api/app/handler"
 )
 
 // App Router and DB instances
@@ -35,6 +36,24 @@ func(a *App) Initialize(config *config.Config) {
 
 	// database population models
 	a.DB = model.DBMigrate(db)
+
+	// Set new Routes
+	a.Router = mux.NewRouter()
+	a.setRouters()
+}
+
+func (a *App) setRouters(){
+	a.Post("/v1/organisation/accounts", a.CreateAccount)
+}
+
+// Wrap the router for POST method
+func (a *App) Post(path string, f func(w http.ResponseWriter, r *http.Request)) {
+	a.Router.HandleFunc(path, f).Methods("POST")
+}
+
+// indicated handler for create account
+func (a *App) CreateAccount(w http.ResponseWriter, r *http.Request) {
+	handler.CreateAccount(a.DB, w, r)
 }
 
 func (a *App) Run(host string) {
